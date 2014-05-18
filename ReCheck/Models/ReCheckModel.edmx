@@ -1,0 +1,963 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="ReCheckModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Cat_Recurso">
+          <Key>
+            <PropertyRef Name="IDRecurso" />
+          </Key>
+          <Property Name="IDRecurso" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="IDTipoRecurso" Type="int" Nullable="false" />
+          <Property Name="DescRecurso" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="IDUbicacion" Type="int" Nullable="false" />
+          <Property Name="IDStatus" Type="int" Nullable="false" />
+          <Property Name="IDEmpresa" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Cat_Status">
+          <Key>
+            <PropertyRef Name="IDStatus" />
+          </Key>
+          <Property Name="IDStatus" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="DescStatus" Type="varchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Cat_TipoRecursos">
+          <Key>
+            <PropertyRef Name="IDTipoRecurso" />
+          </Key>
+          <Property Name="IDTipoRecurso" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="DescTipoRecurso" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="IDStatus" Type="int" Nullable="false" />
+          <Property Name="IDEmpresa" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Cat_Ubicacion">
+          <Key>
+            <PropertyRef Name="IDUbicacion" />
+          </Key>
+          <Property Name="IDUbicacion" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="DescUbicacion" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Direccion" Type="varchar" MaxLength="150" Nullable="false" />
+          <Property Name="Telefono" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="IDStatus" Type="int" Nullable="false" />
+          <Property Name="IDEmpresa" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Empresa">
+          <Key>
+            <PropertyRef Name="IDEmpresa" />
+          </Key>
+          <Property Name="IDEmpresa" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Nombre" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="Telefono" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="Dominio" Type="varchar" MaxLength="60" Nullable="false" />
+          <Property Name="Contacto" Type="varchar" MaxLength="60" Nullable="false" />
+          <Property Name="IDStatus" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Mensaje">
+          <Key>
+            <PropertyRef Name="IDMensaje" />
+          </Key>
+          <Property Name="IDMensaje" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="IDRemitente" Type="int" Nullable="false" />
+          <Property Name="IDDestinatario" Type="int" Nullable="false" />
+          <Property Name="DescMensaje" Type="varchar" MaxLength="500" Nullable="false" />
+          <Property Name="IDNotificacion" Type="int" Nullable="false" />
+          <Property Name="IDStatus" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Notificacion">
+          <Key>
+            <PropertyRef Name="IDNotificacion" />
+          </Key>
+          <Property Name="IDNotificacion" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="DescNotificacion" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="IDStatus" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Reserva">
+          <Key>
+            <PropertyRef Name="IDReserva" />
+          </Key>
+          <Property Name="IDReserva" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="IDUsuario" Type="int" Nullable="false" />
+          <Property Name="IDRecurso" Type="int" Nullable="false" />
+          <Property Name="DescReservar" Type="varchar" MaxLength="200" Nullable="false" />
+          <Property Name="FechaInicio" Type="datetime" Nullable="false" />
+          <Property Name="FechaFin" Type="datetime" Nullable="false" />
+          <Property Name="IDStatus" Type="int" Nullable="false" />
+          <Property Name="IDEmpresa" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="sysdiagrams">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="principal_id" Type="int" Nullable="false" />
+          <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="version" Type="int" />
+          <Property Name="definition" Type="varbinary(max)" />
+        </EntityType>
+        <EntityType Name="Usuario">
+          <Key>
+            <PropertyRef Name="IDUsuario" />
+          </Key>
+          <Property Name="IDUsuario" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Nombre" Type="varchar" MaxLength="60" Nullable="false" />
+          <Property Name="Correo" Type="varchar" MaxLength="60" Nullable="false" />
+          <Property Name="Cargo" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Imagen" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="IDStatus" Type="int" Nullable="false" />
+          <Property Name="IDEmpresa" Type="int" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_Cat_Recurso_Cat_Status">
+          <End Role="Cat_Status" Type="Self.Cat_Status" Multiplicity="1" />
+          <End Role="Cat_Recurso" Type="Self.Cat_Recurso" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Cat_Status">
+              <PropertyRef Name="IDStatus" />
+            </Principal>
+            <Dependent Role="Cat_Recurso">
+              <PropertyRef Name="IDStatus" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Cat_Recurso_Cat_TipoRecursos">
+          <End Role="Cat_TipoRecursos" Type="Self.Cat_TipoRecursos" Multiplicity="1" />
+          <End Role="Cat_Recurso" Type="Self.Cat_Recurso" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Cat_TipoRecursos">
+              <PropertyRef Name="IDTipoRecurso" />
+            </Principal>
+            <Dependent Role="Cat_Recurso">
+              <PropertyRef Name="IDTipoRecurso" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Cat_Recurso_Cat_Ubicacion">
+          <End Role="Cat_Ubicacion" Type="Self.Cat_Ubicacion" Multiplicity="1" />
+          <End Role="Cat_Recurso" Type="Self.Cat_Recurso" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Cat_Ubicacion">
+              <PropertyRef Name="IDUbicacion" />
+            </Principal>
+            <Dependent Role="Cat_Recurso">
+              <PropertyRef Name="IDUbicacion" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Cat_Recurso_Empresa">
+          <End Role="Empresa" Type="Self.Empresa" Multiplicity="1" />
+          <End Role="Cat_Recurso" Type="Self.Cat_Recurso" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Empresa">
+              <PropertyRef Name="IDEmpresa" />
+            </Principal>
+            <Dependent Role="Cat_Recurso">
+              <PropertyRef Name="IDEmpresa" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Cat_TipoRecursos_Cat_Status">
+          <End Role="Cat_Status" Type="Self.Cat_Status" Multiplicity="1" />
+          <End Role="Cat_TipoRecursos" Type="Self.Cat_TipoRecursos" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Cat_Status">
+              <PropertyRef Name="IDStatus" />
+            </Principal>
+            <Dependent Role="Cat_TipoRecursos">
+              <PropertyRef Name="IDStatus" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Cat_TipoRecursos_Empresa">
+          <End Role="Empresa" Type="Self.Empresa" Multiplicity="1" />
+          <End Role="Cat_TipoRecursos" Type="Self.Cat_TipoRecursos" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Empresa">
+              <PropertyRef Name="IDEmpresa" />
+            </Principal>
+            <Dependent Role="Cat_TipoRecursos">
+              <PropertyRef Name="IDEmpresa" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Cat_Ubicacion_Cat_Status">
+          <End Role="Cat_Status" Type="Self.Cat_Status" Multiplicity="1" />
+          <End Role="Cat_Ubicacion" Type="Self.Cat_Ubicacion" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Cat_Status">
+              <PropertyRef Name="IDStatus" />
+            </Principal>
+            <Dependent Role="Cat_Ubicacion">
+              <PropertyRef Name="IDStatus" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Cat_Ubicacion_Empresa">
+          <End Role="Empresa" Type="Self.Empresa" Multiplicity="1" />
+          <End Role="Cat_Ubicacion" Type="Self.Cat_Ubicacion" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Empresa">
+              <PropertyRef Name="IDEmpresa" />
+            </Principal>
+            <Dependent Role="Cat_Ubicacion">
+              <PropertyRef Name="IDEmpresa" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Empresa_Cat_Status">
+          <End Role="Cat_Status" Type="Self.Cat_Status" Multiplicity="1" />
+          <End Role="Empresa" Type="Self.Empresa" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Cat_Status">
+              <PropertyRef Name="IDStatus" />
+            </Principal>
+            <Dependent Role="Empresa">
+              <PropertyRef Name="IDStatus" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Mensaje_Cat_Status">
+          <End Role="Cat_Status" Type="Self.Cat_Status" Multiplicity="1" />
+          <End Role="Mensaje" Type="Self.Mensaje" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Cat_Status">
+              <PropertyRef Name="IDStatus" />
+            </Principal>
+            <Dependent Role="Mensaje">
+              <PropertyRef Name="IDStatus" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Mensaje_Usuario">
+          <End Role="Usuario" Type="Self.Usuario" Multiplicity="1" />
+          <End Role="Mensaje" Type="Self.Mensaje" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Usuario">
+              <PropertyRef Name="IDUsuario" />
+            </Principal>
+            <Dependent Role="Mensaje">
+              <PropertyRef Name="IDRemitente" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Mensaje_UsuarioDestinatario">
+          <End Role="Usuario" Type="Self.Usuario" Multiplicity="1" />
+          <End Role="Mensaje" Type="Self.Mensaje" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Usuario">
+              <PropertyRef Name="IDUsuario" />
+            </Principal>
+            <Dependent Role="Mensaje">
+              <PropertyRef Name="IDDestinatario" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Notificacion_Cat_Status">
+          <End Role="Cat_Status" Type="Self.Cat_Status" Multiplicity="1" />
+          <End Role="Notificacion" Type="Self.Notificacion" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Cat_Status">
+              <PropertyRef Name="IDStatus" />
+            </Principal>
+            <Dependent Role="Notificacion">
+              <PropertyRef Name="IDStatus" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Reserva_Cat_Status">
+          <End Role="Cat_Status" Type="Self.Cat_Status" Multiplicity="1" />
+          <End Role="Reserva" Type="Self.Reserva" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Cat_Status">
+              <PropertyRef Name="IDStatus" />
+            </Principal>
+            <Dependent Role="Reserva">
+              <PropertyRef Name="IDStatus" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Reserva_Empresa">
+          <End Role="Empresa" Type="Self.Empresa" Multiplicity="1" />
+          <End Role="Reserva" Type="Self.Reserva" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Empresa">
+              <PropertyRef Name="IDEmpresa" />
+            </Principal>
+            <Dependent Role="Reserva">
+              <PropertyRef Name="IDEmpresa" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Usuario_Cat_Status">
+          <End Role="Cat_Status" Type="Self.Cat_Status" Multiplicity="1" />
+          <End Role="Usuario" Type="Self.Usuario" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Cat_Status">
+              <PropertyRef Name="IDStatus" />
+            </Principal>
+            <Dependent Role="Usuario">
+              <PropertyRef Name="IDStatus" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Usuario_Empresa">
+          <End Role="Empresa" Type="Self.Empresa" Multiplicity="1" />
+          <End Role="Usuario" Type="Self.Usuario" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Empresa">
+              <PropertyRef Name="IDEmpresa" />
+            </Principal>
+            <Dependent Role="Usuario">
+              <PropertyRef Name="IDEmpresa" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="ReCheckModelStoreContainer">
+          <EntitySet Name="Cat_Recurso" EntityType="Self.Cat_Recurso" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Cat_Status" EntityType="Self.Cat_Status" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Cat_TipoRecursos" EntityType="Self.Cat_TipoRecursos" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Cat_Ubicacion" EntityType="Self.Cat_Ubicacion" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Empresa" EntityType="Self.Empresa" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Mensaje" EntityType="Self.Mensaje" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Notificacion" EntityType="Self.Notificacion" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Reserva" EntityType="Self.Reserva" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Usuario" EntityType="Self.Usuario" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_Cat_Recurso_Cat_Status" Association="Self.FK_Cat_Recurso_Cat_Status">
+            <End Role="Cat_Status" EntitySet="Cat_Status" />
+            <End Role="Cat_Recurso" EntitySet="Cat_Recurso" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Cat_Recurso_Cat_TipoRecursos" Association="Self.FK_Cat_Recurso_Cat_TipoRecursos">
+            <End Role="Cat_TipoRecursos" EntitySet="Cat_TipoRecursos" />
+            <End Role="Cat_Recurso" EntitySet="Cat_Recurso" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Cat_Recurso_Cat_Ubicacion" Association="Self.FK_Cat_Recurso_Cat_Ubicacion">
+            <End Role="Cat_Ubicacion" EntitySet="Cat_Ubicacion" />
+            <End Role="Cat_Recurso" EntitySet="Cat_Recurso" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Cat_Recurso_Empresa" Association="Self.FK_Cat_Recurso_Empresa">
+            <End Role="Empresa" EntitySet="Empresa" />
+            <End Role="Cat_Recurso" EntitySet="Cat_Recurso" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Cat_TipoRecursos_Cat_Status" Association="Self.FK_Cat_TipoRecursos_Cat_Status">
+            <End Role="Cat_Status" EntitySet="Cat_Status" />
+            <End Role="Cat_TipoRecursos" EntitySet="Cat_TipoRecursos" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Cat_TipoRecursos_Empresa" Association="Self.FK_Cat_TipoRecursos_Empresa">
+            <End Role="Empresa" EntitySet="Empresa" />
+            <End Role="Cat_TipoRecursos" EntitySet="Cat_TipoRecursos" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Cat_Ubicacion_Cat_Status" Association="Self.FK_Cat_Ubicacion_Cat_Status">
+            <End Role="Cat_Status" EntitySet="Cat_Status" />
+            <End Role="Cat_Ubicacion" EntitySet="Cat_Ubicacion" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Cat_Ubicacion_Empresa" Association="Self.FK_Cat_Ubicacion_Empresa">
+            <End Role="Empresa" EntitySet="Empresa" />
+            <End Role="Cat_Ubicacion" EntitySet="Cat_Ubicacion" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Empresa_Cat_Status" Association="Self.FK_Empresa_Cat_Status">
+            <End Role="Cat_Status" EntitySet="Cat_Status" />
+            <End Role="Empresa" EntitySet="Empresa" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Mensaje_Cat_Status" Association="Self.FK_Mensaje_Cat_Status">
+            <End Role="Cat_Status" EntitySet="Cat_Status" />
+            <End Role="Mensaje" EntitySet="Mensaje" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Mensaje_Usuario" Association="Self.FK_Mensaje_Usuario">
+            <End Role="Usuario" EntitySet="Usuario" />
+            <End Role="Mensaje" EntitySet="Mensaje" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Mensaje_UsuarioDestinatario" Association="Self.FK_Mensaje_UsuarioDestinatario">
+            <End Role="Usuario" EntitySet="Usuario" />
+            <End Role="Mensaje" EntitySet="Mensaje" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Notificacion_Cat_Status" Association="Self.FK_Notificacion_Cat_Status">
+            <End Role="Cat_Status" EntitySet="Cat_Status" />
+            <End Role="Notificacion" EntitySet="Notificacion" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Reserva_Cat_Status" Association="Self.FK_Reserva_Cat_Status">
+            <End Role="Cat_Status" EntitySet="Cat_Status" />
+            <End Role="Reserva" EntitySet="Reserva" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Reserva_Empresa" Association="Self.FK_Reserva_Empresa">
+            <End Role="Empresa" EntitySet="Empresa" />
+            <End Role="Reserva" EntitySet="Reserva" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Usuario_Cat_Status" Association="Self.FK_Usuario_Cat_Status">
+            <End Role="Cat_Status" EntitySet="Cat_Status" />
+            <End Role="Usuario" EntitySet="Usuario" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Usuario_Empresa" Association="Self.FK_Usuario_Empresa">
+            <End Role="Empresa" EntitySet="Empresa" />
+            <End Role="Usuario" EntitySet="Usuario" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="ReCheckModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Cat_Recurso">
+          <Key>
+            <PropertyRef Name="IDRecurso" />
+          </Key>
+          <Property Name="IDRecurso" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="IDTipoRecurso" Type="Int32" Nullable="false" />
+          <Property Name="DescRecurso" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="IDUbicacion" Type="Int32" Nullable="false" />
+          <Property Name="IDStatus" Type="Int32" Nullable="false" />
+          <Property Name="IDEmpresa" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Cat_Status" Relationship="Self.FK_Cat_Recurso_Cat_Status" FromRole="Cat_Recurso" ToRole="Cat_Status" />
+          <NavigationProperty Name="Cat_TipoRecursos" Relationship="Self.FK_Cat_Recurso_Cat_TipoRecursos" FromRole="Cat_Recurso" ToRole="Cat_TipoRecursos" />
+          <NavigationProperty Name="Cat_Ubicacion" Relationship="Self.FK_Cat_Recurso_Cat_Ubicacion" FromRole="Cat_Recurso" ToRole="Cat_Ubicacion" />
+          <NavigationProperty Name="Empresa" Relationship="Self.FK_Cat_Recurso_Empresa" FromRole="Cat_Recurso" ToRole="Empresa" />
+        </EntityType>
+        <EntityType Name="Cat_Status">
+          <Key>
+            <PropertyRef Name="IDStatus" />
+          </Key>
+          <Property Name="IDStatus" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="DescStatus" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="Cat_Recurso" Relationship="Self.FK_Cat_Recurso_Cat_Status" FromRole="Cat_Status" ToRole="Cat_Recurso" />
+          <NavigationProperty Name="Cat_TipoRecursos" Relationship="Self.FK_Cat_TipoRecursos_Cat_Status" FromRole="Cat_Status" ToRole="Cat_TipoRecursos" />
+          <NavigationProperty Name="Cat_Ubicacion" Relationship="Self.FK_Cat_Ubicacion_Cat_Status" FromRole="Cat_Status" ToRole="Cat_Ubicacion" />
+          <NavigationProperty Name="Empresa" Relationship="Self.FK_Empresa_Cat_Status" FromRole="Cat_Status" ToRole="Empresa" />
+          <NavigationProperty Name="Mensaje" Relationship="Self.FK_Mensaje_Cat_Status" FromRole="Cat_Status" ToRole="Mensaje" />
+          <NavigationProperty Name="Notificacion" Relationship="Self.FK_Notificacion_Cat_Status" FromRole="Cat_Status" ToRole="Notificacion" />
+          <NavigationProperty Name="Reserva" Relationship="Self.FK_Reserva_Cat_Status" FromRole="Cat_Status" ToRole="Reserva" />
+          <NavigationProperty Name="Usuario" Relationship="Self.FK_Usuario_Cat_Status" FromRole="Cat_Status" ToRole="Usuario" />
+        </EntityType>
+        <EntityType Name="Cat_TipoRecursos">
+          <Key>
+            <PropertyRef Name="IDTipoRecurso" />
+          </Key>
+          <Property Name="IDTipoRecurso" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="DescTipoRecurso" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="IDStatus" Type="Int32" Nullable="false" />
+          <Property Name="IDEmpresa" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Cat_Recurso" Relationship="Self.FK_Cat_Recurso_Cat_TipoRecursos" FromRole="Cat_TipoRecursos" ToRole="Cat_Recurso" />
+          <NavigationProperty Name="Cat_Status" Relationship="Self.FK_Cat_TipoRecursos_Cat_Status" FromRole="Cat_TipoRecursos" ToRole="Cat_Status" />
+          <NavigationProperty Name="Empresa" Relationship="Self.FK_Cat_TipoRecursos_Empresa" FromRole="Cat_TipoRecursos" ToRole="Empresa" />
+        </EntityType>
+        <EntityType Name="Cat_Ubicacion">
+          <Key>
+            <PropertyRef Name="IDUbicacion" />
+          </Key>
+          <Property Name="IDUbicacion" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="DescUbicacion" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Direccion" Type="String" MaxLength="150" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Telefono" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="IDStatus" Type="Int32" Nullable="false" />
+          <Property Name="IDEmpresa" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Cat_Recurso" Relationship="Self.FK_Cat_Recurso_Cat_Ubicacion" FromRole="Cat_Ubicacion" ToRole="Cat_Recurso" />
+          <NavigationProperty Name="Cat_Status" Relationship="Self.FK_Cat_Ubicacion_Cat_Status" FromRole="Cat_Ubicacion" ToRole="Cat_Status" />
+          <NavigationProperty Name="Empresa" Relationship="Self.FK_Cat_Ubicacion_Empresa" FromRole="Cat_Ubicacion" ToRole="Empresa" />
+        </EntityType>
+        <EntityType Name="Empresa">
+          <Key>
+            <PropertyRef Name="IDEmpresa" />
+          </Key>
+          <Property Name="IDEmpresa" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Nombre" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Telefono" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Dominio" Type="String" MaxLength="60" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Contacto" Type="String" MaxLength="60" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="IDStatus" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Cat_Recurso" Relationship="Self.FK_Cat_Recurso_Empresa" FromRole="Empresa" ToRole="Cat_Recurso" />
+          <NavigationProperty Name="Cat_Status" Relationship="Self.FK_Empresa_Cat_Status" FromRole="Empresa" ToRole="Cat_Status" />
+          <NavigationProperty Name="Cat_TipoRecursos" Relationship="Self.FK_Cat_TipoRecursos_Empresa" FromRole="Empresa" ToRole="Cat_TipoRecursos" />
+          <NavigationProperty Name="Cat_Ubicacion" Relationship="Self.FK_Cat_Ubicacion_Empresa" FromRole="Empresa" ToRole="Cat_Ubicacion" />
+          <NavigationProperty Name="Reserva" Relationship="Self.FK_Reserva_Empresa" FromRole="Empresa" ToRole="Reserva" />
+          <NavigationProperty Name="Usuario" Relationship="Self.FK_Usuario_Empresa" FromRole="Empresa" ToRole="Usuario" />
+        </EntityType>
+        <EntityType Name="Mensaje">
+          <Key>
+            <PropertyRef Name="IDMensaje" />
+          </Key>
+          <Property Name="IDMensaje" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="IDRemitente" Type="Int32" Nullable="false" />
+          <Property Name="IDDestinatario" Type="Int32" Nullable="false" />
+          <Property Name="DescMensaje" Type="String" MaxLength="500" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="IDNotificacion" Type="Int32" Nullable="false" />
+          <Property Name="IDStatus" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Cat_Status" Relationship="Self.FK_Mensaje_Cat_Status" FromRole="Mensaje" ToRole="Cat_Status" />
+          <NavigationProperty Name="Usuario" Relationship="Self.FK_Mensaje_Usuario" FromRole="Mensaje" ToRole="Usuario" />
+          <NavigationProperty Name="Usuario1" Relationship="Self.FK_Mensaje_UsuarioDestinatario" FromRole="Mensaje" ToRole="Usuario" />
+        </EntityType>
+        <EntityType Name="Notificacion">
+          <Key>
+            <PropertyRef Name="IDNotificacion" />
+          </Key>
+          <Property Name="IDNotificacion" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="DescNotificacion" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="IDStatus" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Cat_Status" Relationship="Self.FK_Notificacion_Cat_Status" FromRole="Notificacion" ToRole="Cat_Status" />
+        </EntityType>
+        <EntityType Name="Reserva">
+          <Key>
+            <PropertyRef Name="IDReserva" />
+          </Key>
+          <Property Name="IDReserva" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="IDUsuario" Type="Int32" Nullable="false" />
+          <Property Name="IDRecurso" Type="Int32" Nullable="false" />
+          <Property Name="DescReservar" Type="String" MaxLength="200" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="FechaInicio" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="FechaFin" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="IDStatus" Type="Int32" Nullable="false" />
+          <Property Name="IDEmpresa" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Cat_Status" Relationship="Self.FK_Reserva_Cat_Status" FromRole="Reserva" ToRole="Cat_Status" />
+          <NavigationProperty Name="Empresa" Relationship="Self.FK_Reserva_Empresa" FromRole="Reserva" ToRole="Empresa" />
+        </EntityType>
+        <EntityType Name="sysdiagrams">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="principal_id" Type="Int32" Nullable="false" />
+          <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="version" Type="Int32" />
+          <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+        </EntityType>
+        <EntityType Name="Usuario">
+          <Key>
+            <PropertyRef Name="IDUsuario" />
+          </Key>
+          <Property Name="IDUsuario" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Nombre" Type="String" MaxLength="60" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Correo" Type="String" MaxLength="60" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Cargo" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Imagen" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="IDStatus" Type="Int32" Nullable="false" />
+          <Property Name="IDEmpresa" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Cat_Status" Relationship="Self.FK_Usuario_Cat_Status" FromRole="Usuario" ToRole="Cat_Status" />
+          <NavigationProperty Name="Empresa" Relationship="Self.FK_Usuario_Empresa" FromRole="Usuario" ToRole="Empresa" />
+          <NavigationProperty Name="Mensaje" Relationship="Self.FK_Mensaje_Usuario" FromRole="Usuario" ToRole="Mensaje" />
+          <NavigationProperty Name="Mensaje1" Relationship="Self.FK_Mensaje_UsuarioDestinatario" FromRole="Usuario" ToRole="Mensaje" />
+        </EntityType>
+        <Association Name="FK_Cat_Recurso_Cat_Status">
+          <End Role="Cat_Status" Type="Self.Cat_Status" Multiplicity="1" />
+          <End Role="Cat_Recurso" Type="Self.Cat_Recurso" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Cat_Status">
+              <PropertyRef Name="IDStatus" />
+            </Principal>
+            <Dependent Role="Cat_Recurso">
+              <PropertyRef Name="IDStatus" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Cat_Recurso_Cat_TipoRecursos">
+          <End Role="Cat_TipoRecursos" Type="Self.Cat_TipoRecursos" Multiplicity="1" />
+          <End Role="Cat_Recurso" Type="Self.Cat_Recurso" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Cat_TipoRecursos">
+              <PropertyRef Name="IDTipoRecurso" />
+            </Principal>
+            <Dependent Role="Cat_Recurso">
+              <PropertyRef Name="IDTipoRecurso" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Cat_Recurso_Cat_Ubicacion">
+          <End Role="Cat_Ubicacion" Type="Self.Cat_Ubicacion" Multiplicity="1" />
+          <End Role="Cat_Recurso" Type="Self.Cat_Recurso" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Cat_Ubicacion">
+              <PropertyRef Name="IDUbicacion" />
+            </Principal>
+            <Dependent Role="Cat_Recurso">
+              <PropertyRef Name="IDUbicacion" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Cat_Recurso_Empresa">
+          <End Role="Empresa" Type="Self.Empresa" Multiplicity="1" />
+          <End Role="Cat_Recurso" Type="Self.Cat_Recurso" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Empresa">
+              <PropertyRef Name="IDEmpresa" />
+            </Principal>
+            <Dependent Role="Cat_Recurso">
+              <PropertyRef Name="IDEmpresa" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Cat_TipoRecursos_Cat_Status">
+          <End Role="Cat_Status" Type="Self.Cat_Status" Multiplicity="1" />
+          <End Role="Cat_TipoRecursos" Type="Self.Cat_TipoRecursos" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Cat_Status">
+              <PropertyRef Name="IDStatus" />
+            </Principal>
+            <Dependent Role="Cat_TipoRecursos">
+              <PropertyRef Name="IDStatus" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Cat_Ubicacion_Cat_Status">
+          <End Role="Cat_Status" Type="Self.Cat_Status" Multiplicity="1" />
+          <End Role="Cat_Ubicacion" Type="Self.Cat_Ubicacion" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Cat_Status">
+              <PropertyRef Name="IDStatus" />
+            </Principal>
+            <Dependent Role="Cat_Ubicacion">
+              <PropertyRef Name="IDStatus" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Empresa_Cat_Status">
+          <End Role="Cat_Status" Type="Self.Cat_Status" Multiplicity="1" />
+          <End Role="Empresa" Type="Self.Empresa" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Cat_Status">
+              <PropertyRef Name="IDStatus" />
+            </Principal>
+            <Dependent Role="Empresa">
+              <PropertyRef Name="IDStatus" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Mensaje_Cat_Status">
+          <End Role="Cat_Status" Type="Self.Cat_Status" Multiplicity="1" />
+          <End Role="Mensaje" Type="Self.Mensaje" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Cat_Status">
+              <PropertyRef Name="IDStatus" />
+            </Principal>
+            <Dependent Role="Mensaje">
+              <PropertyRef Name="IDStatus" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Notificacion_Cat_Status">
+          <End Role="Cat_Status" Type="Self.Cat_Status" Multiplicity="1" />
+          <End Role="Notificacion" Type="Self.Notificacion" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Cat_Status">
+              <PropertyRef Name="IDStatus" />
+            </Principal>
+            <Dependent Role="Notificacion">
+              <PropertyRef Name="IDStatus" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Reserva_Cat_Status">
+          <End Role="Cat_Status" Type="Self.Cat_Status" Multiplicity="1" />
+          <End Role="Reserva" Type="Self.Reserva" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Cat_Status">
+              <PropertyRef Name="IDStatus" />
+            </Principal>
+            <Dependent Role="Reserva">
+              <PropertyRef Name="IDStatus" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Usuario_Cat_Status">
+          <End Role="Cat_Status" Type="Self.Cat_Status" Multiplicity="1" />
+          <End Role="Usuario" Type="Self.Usuario" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Cat_Status">
+              <PropertyRef Name="IDStatus" />
+            </Principal>
+            <Dependent Role="Usuario">
+              <PropertyRef Name="IDStatus" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Cat_TipoRecursos_Empresa">
+          <End Role="Empresa" Type="Self.Empresa" Multiplicity="1" />
+          <End Role="Cat_TipoRecursos" Type="Self.Cat_TipoRecursos" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Empresa">
+              <PropertyRef Name="IDEmpresa" />
+            </Principal>
+            <Dependent Role="Cat_TipoRecursos">
+              <PropertyRef Name="IDEmpresa" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Cat_Ubicacion_Empresa">
+          <End Role="Empresa" Type="Self.Empresa" Multiplicity="1" />
+          <End Role="Cat_Ubicacion" Type="Self.Cat_Ubicacion" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Empresa">
+              <PropertyRef Name="IDEmpresa" />
+            </Principal>
+            <Dependent Role="Cat_Ubicacion">
+              <PropertyRef Name="IDEmpresa" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Reserva_Empresa">
+          <End Role="Empresa" Type="Self.Empresa" Multiplicity="1" />
+          <End Role="Reserva" Type="Self.Reserva" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Empresa">
+              <PropertyRef Name="IDEmpresa" />
+            </Principal>
+            <Dependent Role="Reserva">
+              <PropertyRef Name="IDEmpresa" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Usuario_Empresa">
+          <End Role="Empresa" Type="Self.Empresa" Multiplicity="1" />
+          <End Role="Usuario" Type="Self.Usuario" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Empresa">
+              <PropertyRef Name="IDEmpresa" />
+            </Principal>
+            <Dependent Role="Usuario">
+              <PropertyRef Name="IDEmpresa" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Mensaje_Usuario">
+          <End Role="Usuario" Type="Self.Usuario" Multiplicity="1" />
+          <End Role="Mensaje" Type="Self.Mensaje" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Usuario">
+              <PropertyRef Name="IDUsuario" />
+            </Principal>
+            <Dependent Role="Mensaje">
+              <PropertyRef Name="IDRemitente" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Mensaje_UsuarioDestinatario">
+          <End Role="Usuario" Type="Self.Usuario" Multiplicity="1" />
+          <End Role="Mensaje" Type="Self.Mensaje" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Usuario">
+              <PropertyRef Name="IDUsuario" />
+            </Principal>
+            <Dependent Role="Mensaje">
+              <PropertyRef Name="IDDestinatario" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="ReCheckEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Cat_Recurso" EntityType="Self.Cat_Recurso" />
+          <EntitySet Name="Cat_Status" EntityType="Self.Cat_Status" />
+          <EntitySet Name="Cat_TipoRecursos" EntityType="Self.Cat_TipoRecursos" />
+          <EntitySet Name="Cat_Ubicacion" EntityType="Self.Cat_Ubicacion" />
+          <EntitySet Name="Empresa" EntityType="Self.Empresa" />
+          <EntitySet Name="Mensaje" EntityType="Self.Mensaje" />
+          <EntitySet Name="Notificacion" EntityType="Self.Notificacion" />
+          <EntitySet Name="Reserva" EntityType="Self.Reserva" />
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" />
+          <EntitySet Name="Usuario" EntityType="Self.Usuario" />
+          <AssociationSet Name="FK_Cat_Recurso_Cat_Status" Association="Self.FK_Cat_Recurso_Cat_Status">
+            <End Role="Cat_Status" EntitySet="Cat_Status" />
+            <End Role="Cat_Recurso" EntitySet="Cat_Recurso" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Cat_Recurso_Cat_TipoRecursos" Association="Self.FK_Cat_Recurso_Cat_TipoRecursos">
+            <End Role="Cat_TipoRecursos" EntitySet="Cat_TipoRecursos" />
+            <End Role="Cat_Recurso" EntitySet="Cat_Recurso" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Cat_Recurso_Cat_Ubicacion" Association="Self.FK_Cat_Recurso_Cat_Ubicacion">
+            <End Role="Cat_Ubicacion" EntitySet="Cat_Ubicacion" />
+            <End Role="Cat_Recurso" EntitySet="Cat_Recurso" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Cat_Recurso_Empresa" Association="Self.FK_Cat_Recurso_Empresa">
+            <End Role="Empresa" EntitySet="Empresa" />
+            <End Role="Cat_Recurso" EntitySet="Cat_Recurso" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Cat_TipoRecursos_Cat_Status" Association="Self.FK_Cat_TipoRecursos_Cat_Status">
+            <End Role="Cat_Status" EntitySet="Cat_Status" />
+            <End Role="Cat_TipoRecursos" EntitySet="Cat_TipoRecursos" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Cat_Ubicacion_Cat_Status" Association="Self.FK_Cat_Ubicacion_Cat_Status">
+            <End Role="Cat_Status" EntitySet="Cat_Status" />
+            <End Role="Cat_Ubicacion" EntitySet="Cat_Ubicacion" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Empresa_Cat_Status" Association="Self.FK_Empresa_Cat_Status">
+            <End Role="Cat_Status" EntitySet="Cat_Status" />
+            <End Role="Empresa" EntitySet="Empresa" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Mensaje_Cat_Status" Association="Self.FK_Mensaje_Cat_Status">
+            <End Role="Cat_Status" EntitySet="Cat_Status" />
+            <End Role="Mensaje" EntitySet="Mensaje" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Notificacion_Cat_Status" Association="Self.FK_Notificacion_Cat_Status">
+            <End Role="Cat_Status" EntitySet="Cat_Status" />
+            <End Role="Notificacion" EntitySet="Notificacion" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Reserva_Cat_Status" Association="Self.FK_Reserva_Cat_Status">
+            <End Role="Cat_Status" EntitySet="Cat_Status" />
+            <End Role="Reserva" EntitySet="Reserva" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Usuario_Cat_Status" Association="Self.FK_Usuario_Cat_Status">
+            <End Role="Cat_Status" EntitySet="Cat_Status" />
+            <End Role="Usuario" EntitySet="Usuario" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Cat_TipoRecursos_Empresa" Association="Self.FK_Cat_TipoRecursos_Empresa">
+            <End Role="Empresa" EntitySet="Empresa" />
+            <End Role="Cat_TipoRecursos" EntitySet="Cat_TipoRecursos" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Cat_Ubicacion_Empresa" Association="Self.FK_Cat_Ubicacion_Empresa">
+            <End Role="Empresa" EntitySet="Empresa" />
+            <End Role="Cat_Ubicacion" EntitySet="Cat_Ubicacion" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Reserva_Empresa" Association="Self.FK_Reserva_Empresa">
+            <End Role="Empresa" EntitySet="Empresa" />
+            <End Role="Reserva" EntitySet="Reserva" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Usuario_Empresa" Association="Self.FK_Usuario_Empresa">
+            <End Role="Empresa" EntitySet="Empresa" />
+            <End Role="Usuario" EntitySet="Usuario" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Mensaje_Usuario" Association="Self.FK_Mensaje_Usuario">
+            <End Role="Usuario" EntitySet="Usuario" />
+            <End Role="Mensaje" EntitySet="Mensaje" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Mensaje_UsuarioDestinatario" Association="Self.FK_Mensaje_UsuarioDestinatario">
+            <End Role="Usuario" EntitySet="Usuario" />
+            <End Role="Mensaje" EntitySet="Mensaje" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="ReCheckModelStoreContainer" CdmEntityContainer="ReCheckEntities">
+          <EntitySetMapping Name="Cat_Recurso">
+            <EntityTypeMapping TypeName="ReCheckModel.Cat_Recurso">
+              <MappingFragment StoreEntitySet="Cat_Recurso">
+                <ScalarProperty Name="IDRecurso" ColumnName="IDRecurso" />
+                <ScalarProperty Name="IDTipoRecurso" ColumnName="IDTipoRecurso" />
+                <ScalarProperty Name="DescRecurso" ColumnName="DescRecurso" />
+                <ScalarProperty Name="IDUbicacion" ColumnName="IDUbicacion" />
+                <ScalarProperty Name="IDStatus" ColumnName="IDStatus" />
+                <ScalarProperty Name="IDEmpresa" ColumnName="IDEmpresa" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Cat_Status">
+            <EntityTypeMapping TypeName="ReCheckModel.Cat_Status">
+              <MappingFragment StoreEntitySet="Cat_Status">
+                <ScalarProperty Name="IDStatus" ColumnName="IDStatus" />
+                <ScalarProperty Name="DescStatus" ColumnName="DescStatus" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Cat_TipoRecursos">
+            <EntityTypeMapping TypeName="ReCheckModel.Cat_TipoRecursos">
+              <MappingFragment StoreEntitySet="Cat_TipoRecursos">
+                <ScalarProperty Name="IDTipoRecurso" ColumnName="IDTipoRecurso" />
+                <ScalarProperty Name="DescTipoRecurso" ColumnName="DescTipoRecurso" />
+                <ScalarProperty Name="IDStatus" ColumnName="IDStatus" />
+                <ScalarProperty Name="IDEmpresa" ColumnName="IDEmpresa" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Cat_Ubicacion">
+            <EntityTypeMapping TypeName="ReCheckModel.Cat_Ubicacion">
+              <MappingFragment StoreEntitySet="Cat_Ubicacion">
+                <ScalarProperty Name="IDUbicacion" ColumnName="IDUbicacion" />
+                <ScalarProperty Name="DescUbicacion" ColumnName="DescUbicacion" />
+                <ScalarProperty Name="Direccion" ColumnName="Direccion" />
+                <ScalarProperty Name="Telefono" ColumnName="Telefono" />
+                <ScalarProperty Name="IDStatus" ColumnName="IDStatus" />
+                <ScalarProperty Name="IDEmpresa" ColumnName="IDEmpresa" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Empresa">
+            <EntityTypeMapping TypeName="ReCheckModel.Empresa">
+              <MappingFragment StoreEntitySet="Empresa">
+                <ScalarProperty Name="IDEmpresa" ColumnName="IDEmpresa" />
+                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+                <ScalarProperty Name="Telefono" ColumnName="Telefono" />
+                <ScalarProperty Name="Dominio" ColumnName="Dominio" />
+                <ScalarProperty Name="Contacto" ColumnName="Contacto" />
+                <ScalarProperty Name="IDStatus" ColumnName="IDStatus" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Mensaje">
+            <EntityTypeMapping TypeName="ReCheckModel.Mensaje">
+              <MappingFragment StoreEntitySet="Mensaje">
+                <ScalarProperty Name="IDMensaje" ColumnName="IDMensaje" />
+                <ScalarProperty Name="IDRemitente" ColumnName="IDRemitente" />
+                <ScalarProperty Name="IDDestinatario" ColumnName="IDDestinatario" />
+                <ScalarProperty Name="DescMensaje" ColumnName="DescMensaje" />
+                <ScalarProperty Name="IDNotificacion" ColumnName="IDNotificacion" />
+                <ScalarProperty Name="IDStatus" ColumnName="IDStatus" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Notificacion">
+            <EntityTypeMapping TypeName="ReCheckModel.Notificacion">
+              <MappingFragment StoreEntitySet="Notificacion">
+                <ScalarProperty Name="IDNotificacion" ColumnName="IDNotificacion" />
+                <ScalarProperty Name="DescNotificacion" ColumnName="DescNotificacion" />
+                <ScalarProperty Name="IDStatus" ColumnName="IDStatus" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Reserva">
+            <EntityTypeMapping TypeName="ReCheckModel.Reserva">
+              <MappingFragment StoreEntitySet="Reserva">
+                <ScalarProperty Name="IDReserva" ColumnName="IDReserva" />
+                <ScalarProperty Name="IDUsuario" ColumnName="IDUsuario" />
+                <ScalarProperty Name="IDRecurso" ColumnName="IDRecurso" />
+                <ScalarProperty Name="DescReservar" ColumnName="DescReservar" />
+                <ScalarProperty Name="FechaInicio" ColumnName="FechaInicio" />
+                <ScalarProperty Name="FechaFin" ColumnName="FechaFin" />
+                <ScalarProperty Name="IDStatus" ColumnName="IDStatus" />
+                <ScalarProperty Name="IDEmpresa" ColumnName="IDEmpresa" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="sysdiagrams">
+            <EntityTypeMapping TypeName="ReCheckModel.sysdiagrams">
+              <MappingFragment StoreEntitySet="sysdiagrams">
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="principal_id" ColumnName="principal_id" />
+                <ScalarProperty Name="diagram_id" ColumnName="diagram_id" />
+                <ScalarProperty Name="version" ColumnName="version" />
+                <ScalarProperty Name="definition" ColumnName="definition" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Usuario">
+            <EntityTypeMapping TypeName="ReCheckModel.Usuario">
+              <MappingFragment StoreEntitySet="Usuario">
+                <ScalarProperty Name="IDUsuario" ColumnName="IDUsuario" />
+                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+                <ScalarProperty Name="Correo" ColumnName="Correo" />
+                <ScalarProperty Name="Cargo" ColumnName="Cargo" />
+                <ScalarProperty Name="Imagen" ColumnName="Imagen" />
+                <ScalarProperty Name="IDStatus" ColumnName="IDStatus" />
+                <ScalarProperty Name="IDEmpresa" ColumnName="IDEmpresa" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
